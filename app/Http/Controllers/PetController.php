@@ -24,6 +24,8 @@ class PetController extends Controller
         $data = $request->all();
         // Pegar somente um campo $name = $request->input('name');
         $pet = Pet::create($data);
+
+        return $pet;
     }
 
     public function destroy($id) {
