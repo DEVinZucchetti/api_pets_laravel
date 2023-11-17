@@ -13,7 +13,7 @@ return new class extends Migration
         Schema::create($this->table, function (Blueprint $table) {
             $table->id();
             $table->string('name', 150);
-            $table->string('cpf', 20)->nullable();
+            $table->string('cpf', 20)->unique()->nullable();
             $table->string('contact')->nullable();
             $table->timestamps();
         });
