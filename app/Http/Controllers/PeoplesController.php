@@ -81,6 +81,18 @@ class PeoplesController extends Controller
 
     public function destroy(string $id)
     {
-        //
+        try {
+            $people = PeopleModel::find($id);
+
+            if(empty($people))
+            {
+                return $this->response("Pessoa não encontrada", null, false, Response::HTTP_NOT_FOUND);
+            }
+            
+            PeopleModel::destroy($id);
+            return $this->response("Pessoa $people->name exluida com sucesso.", null);
+        } catch(\Exception $e) {
+            return $this->response($e->getMessage(), null, false, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 }
