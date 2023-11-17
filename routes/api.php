@@ -5,7 +5,7 @@ use App\Http\Controllers\RaceController;
 use App\Http\Controllers\PeoplesController;
 use Illuminate\Support\Facades\Route;
 
-Route::resource('persons', PeoplesController::class)->only(
+Route::resource('peoples', PeoplesController::class)->only(
   ['index', 'show', 'store', 'update', 'destroy']
 );
 
