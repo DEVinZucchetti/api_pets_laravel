@@ -22,7 +22,20 @@ class PeoplesController extends Controller
 
     public function store(Request $request)
     {
-        //
+        try {
+            $request->validate([
+                'name' => 'required | min: 3 | max: 150',
+                'cpf' => 'min: 11 | max: 20',
+                'contact' => 'max: 20',
+            ]);
+
+            $payload = $request->all();
+            $people = PeopleModel::create($payload);
+
+            return $this->response("$people->name cadastrada com sucesso.", $people);
+        } catch(\Exception $e) {
+            return $this->response($e->getMessage(), null, false, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     public function show(string $id)
