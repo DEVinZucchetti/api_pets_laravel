@@ -2,10 +2,10 @@
 
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\RaceController;
-use App\Http\Controllers\PersonsController;
+use App\Http\Controllers\PeoplesController;
 use Illuminate\Support\Facades\Route;
 
-Route::resource('persons', PersonsController::class)->only(
+Route::resource('persons', PeoplesController::class)->only(
   ['index', 'show', 'store', 'update', 'destroy']
 );
 
