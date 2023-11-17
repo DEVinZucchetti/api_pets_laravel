@@ -32,7 +32,7 @@ class PeoplesController extends Controller
             $payload = $request->all();
             $people = PeopleModel::create($payload);
 
-            return $this->response("$people->name cadastrada com sucesso.", $people);
+            return $this->response("Pessoa $people->name cadastrada com sucesso.", $people);
         } catch(\Exception $e) {
             return $this->response($e->getMessage(), null, false, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
@@ -40,7 +40,18 @@ class PeoplesController extends Controller
 
     public function show(string $id)
     {
-        //
+        try {
+            $people = PeopleModel::find($id);
+
+            if(empty($people))
+            {
+                return $this->response("Pessoa não encontrada", null, false, Response::HTTP_NOT_FOUND);
+            }
+
+            return $this->response("Pessoa $people->name encontrada com sucesso.", $people);
+        } catch(\Exception $e) {
+            return $this->response($e->getMessage(), null, false, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     public function update(Request $request, string $id)
