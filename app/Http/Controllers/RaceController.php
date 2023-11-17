@@ -21,8 +21,7 @@ class RaceController extends Controller
                 'name' => 'required|string|unique:races|max:50'
             ]);
 
-
-            $data = $request->orderBy('name', 'desc')->get();
+            $data = $request->all();
 
             $race = Race::create($data);
 
