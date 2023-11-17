@@ -56,7 +56,27 @@ class PeoplesController extends Controller
 
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            $request->validate([
+                'name' => 'min: 3 | max: 150',
+                'cpf' => 'min: 11 | max: 20',
+                'contact' => 'max: 20',
+            ]);
+            
+            $people = PeopleModel::find($id);
+
+            if(empty($people))
+            {
+                return $this->response("Pessoa não encontrada", null, false, Response::HTTP_NOT_FOUND);
+            }
+
+            $payload = $request->all();
+            $people->update($payload);
+
+            return $this->response("Pessoa $people->name atualizada com sucesso", $people);
+        } catch(\Exception $e) {
+            return $this->response($e->getMessage(), null, false, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     public function destroy(string $id)
