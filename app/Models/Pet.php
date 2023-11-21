@@ -12,6 +12,12 @@ class Pet extends Model
     // altera o nome da tabela buscada pelo modelo
     protected $table = 'pets';
 
-    protected $fillable = ['name', 'weight', 'size', 'age'];
+    protected $fillable = ['name', 'weight', 'size', 'age', 'race_id'];
 
+    protected $hidden = ['race_id'];
+
+    public function race()
+    {
+        return $this->hasOne(Race::class);
+    }
 }
