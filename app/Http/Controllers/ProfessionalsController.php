@@ -45,7 +45,13 @@ class ProfessionalsController extends Controller
     {
         try
         {
-            
+            $data = ProfessionalModel::with(['people'])->find($id);
+
+            if(empty($data))
+            {
+                return $this->response("Profissional não encontrado.", null, false, Response::HTTP_NOT_FOUND);
+            }
+            return $this->response("Profissional ".$data->people->name." encontrado com sucesso.", $data);
         } catch (\Exception $e) 
         {
             return $this->response($e->getMessage(), null, false, Response::HTTP_INTERNAL_SERVER_ERROR);
