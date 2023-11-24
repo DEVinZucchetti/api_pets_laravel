@@ -62,6 +62,19 @@ class ClientsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $data = ClientModel::with(['people'])->find($id);
+
+            if(empty($data)) {
+                return $this->response('Cliente não encontrado.', null, false, Response::HTTP_NOT_FOUND);
+            }
+
+            ClientModel::destroy($data->id);
+
+            $message = "Cliente ".$data->people->name." deletado com sucesso.";
+            return $this->response($message, $data);
+        } catch (\Exception $e) {
+            return $this->response($e->getMessage(), null, false, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 }
