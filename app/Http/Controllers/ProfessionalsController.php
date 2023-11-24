@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Professional as ProfessionalModel;
+use App\Models\People as PeopleModel;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -29,9 +30,25 @@ class ProfessionalsController extends Controller
      */
     public function store(Request $request)
     {
-                try
+        try
         {
-            
+            $request->validate([
+                'name' => 'required | min: 3 | max: 150',
+                'cpf' => 'min: 11 | max: 20',
+                'contact' => 'max: 20',
+                'specialty'=> 'required | string | max: 50',
+                'register'=> ' string | max: 20',
+            ]);
+
+            $people = PeopleModel::firstOrCreate($request->only(['name', 'cpf', 'contact']));
+
+            $data = ProfessionalModel::create([
+                'people_id'=> $people->id,
+                'specialty'=> $request->input('specialty'),
+                'register'=> $request->input('register'),
+            ]);
+
+            return $this->response("Profissional ".$data->people->name." cadastrado com sucesso.", $data);
         } catch (\Exception $e) 
         {
             return $this->response($e->getMessage(), null, false, Response::HTTP_INTERNAL_SERVER_ERROR);
