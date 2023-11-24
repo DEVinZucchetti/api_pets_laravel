@@ -17,7 +17,7 @@ class ClientsController extends Controller
         try 
         {
             $data = ClientModel::with(['people'])->get();
-            $message = $data->count().$data->count() === 1 ? 'cliente encontrado' : 'clientes encontrados'." com sucesso.";
+            $message = $data->count().($data->count() === 1 ? ' cliente encontrado' : ' clientes encontrados')." com sucesso.";
             return $this->response($message, $data);
         } catch (\Exception $e) {
             return $this->response($e->getMessage(), null, false, Response::HTTP_INTERNAL_SERVER_ERROR);
