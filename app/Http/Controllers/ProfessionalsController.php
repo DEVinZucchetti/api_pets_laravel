@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Professional as ProfessionalModel;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -12,7 +13,15 @@ class ProfessionalsController extends Controller
      */
     public function index()
     {
-        //
+        try
+        {
+            $data = ProfessionalModel::with(['people'])->get();
+            $message = $data->count()." ".($data->count() === 1 ? "profissional encontrado" : "profissionais encontrados")." com sucesso.";
+            return $this->response($message, $data);
+        } catch (\Exception $e) 
+        {
+            return $this->response($e->getMessage(), null, false, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**
@@ -20,7 +29,13 @@ class ProfessionalsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+                try
+        {
+            
+        } catch (\Exception $e) 
+        {
+            return $this->response($e->getMessage(), null, false, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**
@@ -28,7 +43,13 @@ class ProfessionalsController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try
+        {
+            
+        } catch (\Exception $e) 
+        {
+            return $this->response($e->getMessage(), null, false, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**
@@ -36,7 +57,13 @@ class ProfessionalsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try
+        {
+            
+        } catch (\Exception $e) 
+        {
+            return $this->response($e->getMessage(), null, false, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**
@@ -44,6 +71,12 @@ class ProfessionalsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try
+        {
+            
+        } catch (\Exception $e) 
+        {
+            return $this->response($e->getMessage(), null, false, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 }
