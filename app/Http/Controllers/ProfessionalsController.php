@@ -51,6 +51,7 @@ class ProfessionalsController extends Controller
             {
                 return $this->response("Profissional não encontrado.", null, false, Response::HTTP_NOT_FOUND);
             }
+            
             return $this->response("Profissional ".$data->people->name." encontrado com sucesso.", $data);
         } catch (\Exception $e) 
         {
@@ -77,9 +78,17 @@ class ProfessionalsController extends Controller
      */
     public function destroy(string $id)
     {
-        try
+       try
         {
+            $data = ProfessionalModel::with(['people'])->find($id);
+
+            if(empty($data))
+            {
+                return $this->response("Profissional não encontrado.", null, false, Response::HTTP_NOT_FOUND);
+            }
             
+            ProfessionalModel::destroy($data->id);
+            return $this->response("Profissional ".$data->people->name." deletado com sucesso.", $data);
         } catch (\Exception $e) 
         {
             return $this->response($e->getMessage(), null, false, Response::HTTP_INTERNAL_SERVER_ERROR);
