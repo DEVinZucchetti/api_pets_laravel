@@ -42,7 +42,7 @@ class ProfessionalsController extends Controller
 
             $people = PeopleModel::firstOrCreate($request->only(['name', 'cpf', 'contact']));
 
-            $data = ProfessionalModel::create([
+            $data = ProfessionalModel::firstOrCreate([
                 'people_id'=> $people->id,
                 'specialty'=> $request->input('specialty'),
                 'register'=> $request->input('register'),
@@ -99,22 +99,22 @@ class ProfessionalsController extends Controller
 
             $people = PeopleModel::find($professional->people->id);
 
-            if(!isset($request->name)) {
+            if(!empty($request->input('name'))) {
                 $people->name = $request->name;
                 $people->save();
             }
 
-            if(!isset($request->cpf)) {
+            if(!empty($request->input('cpf'))) {
                 $people->cpf = $request->cpf;
                 $people->save();
             }
 
-            if(!isset($request->contact)) {
+            if(!empty($request->input('contact'))) {
                 $people->contact = $request->contact;
                 $people->save();
             }
 
-            $data = PeopleModel::find($id);
+            $data = ProfessionalModel::with(['people'])->find($id);
 
 
             return $this->response("Profissional ".$data->people->name." atualizado com sucesso.", $data);
