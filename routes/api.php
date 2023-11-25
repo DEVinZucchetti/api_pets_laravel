@@ -3,6 +3,7 @@
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\RaceController;
 use App\Http\Controllers\PeoplesController;
+use App\Http\Controllers\SpeciesController;
 use Illuminate\Support\Facades\Route;
 
 Route::resource('peoples', PeoplesController::class)->only(
@@ -18,3 +19,4 @@ Route::prefix('races')->group(function () {
   Route::post('', [RaceController::class, 'store']);
 });
 
+Route::resource('species', SpeciesController::class)->except(['create', 'edit']);
