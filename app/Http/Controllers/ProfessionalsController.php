@@ -83,7 +83,41 @@ class ProfessionalsController extends Controller
     {
         try
         {
-            
+            $request->validate([
+                'name' => 'string | min: 3 | max: 150',
+                'cpf' => 'string | min: 11 | max: 20',
+                'contact' => 'string | max: 20',
+                'specialty'=> 'required | string | max: 50',
+                'register'=> ' string | max: 20',
+            ]);
+
+            $professional = ProfessionalModel::find($id);
+            $professional->update([
+                'specialty'=> $request->input('specialty'),
+                'register'=> $request->input('register'),
+            ]);
+
+            $people = PeopleModel::find($professional->people->id);
+
+            if(!isset($request->name)) {
+                $people->name = $request->name;
+                $people->save();
+            }
+
+            if(!isset($request->cpf)) {
+                $people->cpf = $request->cpf;
+                $people->save();
+            }
+
+            if(!isset($request->contact)) {
+                $people->contact = $request->contact;
+                $people->save();
+            }
+
+            $data = PeopleModel::find($id);
+
+
+            return $this->response("Profissional ".$data->people->name." atualizado com sucesso.", $data);
         } catch (\Exception $e) 
         {
             return $this->response($e->getMessage(), null, false, Response::HTTP_INTERNAL_SERVER_ERROR);
