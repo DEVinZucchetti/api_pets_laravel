@@ -5,6 +5,7 @@ use App\Http\Controllers\PetController;
 use App\Http\Controllers\RaceController;
 use App\Http\Controllers\PeoplesController;
 use App\Http\Controllers\ProfessionalsController;
+
 use App\Http\Controllers\SpeciesController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +23,7 @@ Route::prefix('races')->group(function () {
   Route::get('', [RaceController::class, 'index']);
   Route::post('', [RaceController::class, 'store']);
 });
+
 
 
 Route::resource('professionals', ProfessionalsController::class)->except(['create', 'edit']);
