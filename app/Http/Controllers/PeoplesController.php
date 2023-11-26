@@ -12,7 +12,7 @@ class PeoplesController extends Controller
     public function index()
     {
         try {
-            $peoples = PeopleModel::all();
+            $peoples = PeopleModel::with(['professional', 'client'])->get();
             $message = $peoples->count()." ".($peoples->count() === 1 ? "pessoa encontrada" : "pessoas encontradas")." com sucesso.";
             return $this->response($message, $peoples);
         } catch(\Exception $e) {
@@ -41,7 +41,7 @@ class PeoplesController extends Controller
     public function show(string $id)
     {
         try {
-            $people = PeopleModel::find($id);
+            $people = PeopleModel::with(['professional', 'client'])->find($id);
 
             if(empty($people))
             {
@@ -63,7 +63,7 @@ class PeoplesController extends Controller
                 'contact' => 'max: 20',
             ]);
             
-            $people = PeopleModel::find($id);
+            $people = PeopleModel::with(['professional', 'client'])->find($id);
 
             if(empty($people))
             {
@@ -82,7 +82,7 @@ class PeoplesController extends Controller
     public function destroy(string $id)
     {
         try {
-            $people = PeopleModel::find($id);
+            $people = PeopleModel::with(['professional', 'client'])->find($id);
 
             if(empty($people))
             {
