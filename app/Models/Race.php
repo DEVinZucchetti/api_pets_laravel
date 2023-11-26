@@ -11,4 +11,9 @@ class Race extends Model
 
     protected $fillable = ['name'];
     protected $hidden = ['created_at', 'updated_at'];
+
+    public function pets()
+    {
+        return $this->belongsToMany(Pet::class, 'race_id', 'id');
+    }
 }
